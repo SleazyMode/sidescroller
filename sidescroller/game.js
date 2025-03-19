@@ -14,6 +14,11 @@ const OBSTACLE_SPEED = 5;
 const OBSTACLE_WIDTH = 20;
 const OBSTACLE_HEIGHT = 40;
 
+// Sound effects
+const jumpSound = new Audio('assets/sounds/jump3.wav');
+jumpSound.volume = 0.3; // Set jump sound to 30% volume
+const gameOverSound = new Audio('assets/sounds/game-over.wav');
+
 // Game state
 let score = 0;
 let gameOver = false;
@@ -43,6 +48,8 @@ document.addEventListener('keydown', (event) => {
 function jump() {
     player.isJumping = true;
     player.velocityY = JUMP_FORCE;
+    jumpSound.currentTime = 0; // Reset sound to start
+    jumpSound.play();
 }
 
 function resetGame() {
@@ -97,6 +104,8 @@ function update() {
             player.y + player.height > obstacle.y) {
             gameOver = true;
             gameOverElement.classList.remove('hidden');
+            gameOverSound.currentTime = 0; // Reset sound to start
+            gameOverSound.play();
             break;
         }
     }
